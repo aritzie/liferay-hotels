@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder dependency-injector="ds" package-path="com.hiberus.hotels">
+	<namespace>HOTELS</namespace>
+	
+	<entity local-service="true" name="Hotel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="hotelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="email" type="String" />
+		<column name="address" type="String" />
+		<column name="location" type="String" />
+		<column name="foundationDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="Location" return-type="Collection">
+			<finder-column name="location" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+	</entity>
+	
+	<entity local-service="true" name="Room" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="roomId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="hotelId" type="long" />
+		<column name="number" type="int" />
+		<column name="type" type="String" />
+		<column name="size" type="int" />
+		<column name="price" type="double" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="hotelId"/>
+			<order-column name="number" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder return-type="Collection" name="HotelId">
+			<finder-column name="hotelId" />
+		</finder>
+		<finder name="HotelId_Type" return-type="Collection">
+			<finder-column name="hotelId" />
+			<finder-column name="type" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+	</entity>
+	
+	<exceptions>
+		<exception>HotelValidation</exception>
+	</exceptions>
+	
+</service-builder>

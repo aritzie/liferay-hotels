@@ -1,0 +1,11 @@
+dependencies {
+	compile project(":modules:hotels:hotels-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+}
+
+buildService {
+	apiDir = "../hotels-api/src/main/java"
+}
+
+group = "com.hiberus.hotels"

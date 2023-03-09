@@ -1,0 +1,11 @@
+Bundle-Name: hotels-api
+Bundle-SymbolicName: com.hiberus.hotels.api
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.hiberus.hotels.exception,\
+	com.hiberus.hotels.model,\
+	com.hiberus.hotels.service,\
+	com.hiberus.hotels.service.persistence,\
+	com.hiberus.hotels.validator
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../hotels-service/service.xml

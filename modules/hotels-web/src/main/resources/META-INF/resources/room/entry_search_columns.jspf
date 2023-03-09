@@ -1,0 +1,74 @@
+<%-- Generate room view URL. --%>
+<portlet:renderURL var="viewRoomURL">
+	<portlet:param name="mvcRenderCommandName" value="<%=MVCCommandsNames.VIEW_HOTEL%>" />
+	<portlet:param name="redirect" value="${currentURL}" />
+	<portlet:param name="roomId" value="${room.roomId}" />
+</portlet:renderURL>
+<c:choose>
+	<%-- Descriptive (list) view --%>
+	<c:when
+		test='${roomManagementToolbarDisplayContext.getDisplayStyle().equals("descriptive")}'>
+		<%-- User --%>
+		<liferay-ui:search-container-column-user showDetails="<%=false%>"
+			userId="${room.getUserId()}" />
+		<liferay-ui:search-container-column-text colspan="<%=2%>">
+			<%
+				String modifiedDateDescription = LanguageUtil.getTimeDescription(request,
+									System.currentTimeMillis() - room.getModifiedDate().getTime(), true);
+			%>
+			<h5 class="text-default">
+				<liferay-ui:message
+					arguments="<%=new String[] {room.getUserName(), modifiedDateDescription }%>"
+					key="x-modified-x-ago" />
+			</h5>
+			<h4>
+				<aui:a href="${viewRoomURL}">
+				 	${room.getNumber()}
+				</aui:a>
+			</h4>
+		</liferay-ui:search-container-column-text>
+		<liferay-ui:search-container-column-jsp
+			path="/room/entry_actions.jsp" />
+	</c:when>
+	<%-- Card view --%>
+	<c:when
+		test='${roomManagementToolbarDisplayContext.getDisplayStyle().equals("icon")}'>
+		<%-- <%
+			row.setCssClass("lfr-asset-item");
+		%> --%>
+		<liferay-ui:search-container-column-text>
+			<%-- Vertical card. --%>
+			<liferay-frontend:icon-vertical-card
+				actionJsp="/room/entry_actions.jsp"
+				actionJspServletContext="<%= application %>" 
+				icon="cards2"
+				resultRow="${row}" 
+				title="${room.getNumber()}"
+				url="${viewRoomURL}">
+				<liferay-frontend:vertical-card-sticker-bottom>
+					<liferay-ui:user-portrait userId="${room.userId}" />
+				</liferay-frontend:vertical-card-sticker-bottom>
+				<liferay-frontend:vertical-card-footer>
+
+					<div class="truncate-text">
+
+						<%-- Strip HTML --%>
+
+						<%=HtmlUtil.stripHtml(String.valueOf(room.getNumber()))%>
+					</div>
+				</liferay-frontend:vertical-card-footer>
+			</liferay-frontend:icon-vertical-card>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<%-- Table view --%>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text href="${viewRoomURL}"
+			name="room.number" value="<%= String.valueOf(room.getNumber()) %>" />
+		<liferay-ui:search-container-column-user name="room.author"
+			userId="${room.userId}" />
+		<liferay-ui:search-container-column-date name="room.create-date"
+			property="createDate" />
+		<liferay-ui:search-container-column-jsp name="actions"
+			path="/room/entry_actions.jsp" />
+	</c:otherwise>
+</c:choose>

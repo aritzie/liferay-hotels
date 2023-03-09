@@ -1,0 +1,4 @@
+Bundle-Name: hotels-web
+Bundle-SymbolicName: com.hiberus.hotels.web
+Bundle-Version: 1.0.0
+Export-Package: com.hiberus.hotels.web.constants
